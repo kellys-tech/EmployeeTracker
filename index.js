@@ -1,5 +1,6 @@
-var mysql = require("mysql");
-var inquirer = require("inquirer");
+const mysql = require("mysql");
+const inquirer = require("inquirer");
+const cTable = require("console.table")
 
 //create connection to the database. this will be replaced with the user's info
 var connection = mysql.createConnection({
@@ -19,3 +20,45 @@ connection.connect(function(err) {
     //run search function if a connection is made to the db
     runSearch();
 })
+
+function begin() {
+    inquirer.prompt ({
+        name: "addViewDelete",
+        type: "list",
+        message: "What would you like to do?",
+        choices: ["Add Department", "Add Role", "Add Employee", "View Departments", "View Role", "View Employee", "Delete Department", "Delete Role", "Delete Employee", "Done"]
+    })
+    .then(function(answer) {
+        switch (answer.action) {
+            case "Add Department":
+                addDept();
+                break;
+            case "Add Role":
+                addRole();
+                break;
+            case "Add Employee":
+                addEmpl();
+                break;
+            case "View Departments":
+                viewDept();
+                break;
+            case "View Role":
+                viewRole();
+                break;
+            case "View Employee":
+                viewEmpl();
+                break;
+            case "Delete Department":
+                delDept();
+                break;
+            case "Delete Role":
+                delRole();
+                break;
+            case "Delete Employee":
+                delEmpl();
+                break;
+            case "Done":
+                connection.end();
+        }
+    })
+}
