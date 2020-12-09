@@ -10,15 +10,15 @@ var connection = mysql.createConnection({
     //user's username
     user: "root",
     //user's password
-    password: "",
+    password: "root",
     //db name to connect to
     database: "employeeTracker_DB"
 })
 //handle error case by returning an error if the databse is not found
 connection.connect(function(err) {
     if(err) throw err;
-    //run search function if a connection is made to the db
-    runSearch();
+    //run begin function to start questions if a connection is made
+    begin()
 })
 //function to ask question
 function begin() {
@@ -50,10 +50,64 @@ function begin() {
                 viewEmpl();
                 break;
             case "Update Employee Role":
-                delDept();
+                updtRole();
                 break;
             case "Done":
                 connection.end();
         }
     })
+}
+//ADD DEPARTMENT function
+function addDept() {
+    //prompt user to enter department name
+    inquirer.prompt({
+        name: "name",
+        type: "input",
+        message: "Enter the department name.",
+        //validate if answer was input
+        validate: function(value) {
+        //if yes, return true
+            if (isNaN(value)=== false) {
+                return true;
+            }
+            //if not return false
+            return false;
+        }
+    })
+    .then(function(answer) {
+        connection.query(
+            "INSERT INTO departments SET?", {
+                name: answer.name
+            },
+            function(err) {
+                if(err) throw err;
+                console.log("Your department was added successfully");
+                begin();
+            }
+        );
+    });
+}
+
+function addRole() {
+
+}
+
+function addEmpl() {
+
+}
+
+function viewDept() {
+
+}
+
+function viewRole() {
+
+}
+
+function viewEmpl() {
+
+}
+
+function updtRole() {
+
 }
