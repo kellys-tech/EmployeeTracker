@@ -7,7 +7,7 @@ var connection = mysql.createConnection({
     host: "localhost",
     //user's port
     port: 3306,
-    //user's u/n
+    //user's username
     user: "root",
     //user's password
     password: "",
@@ -20,13 +20,14 @@ connection.connect(function(err) {
     //run search function if a connection is made to the db
     runSearch();
 })
-
+//function to ask question
 function begin() {
+    //prompt for what the user would like to do
     inquirer.prompt ({
         name: "addViewDelete",
         type: "list",
         message: "What would you like to do?",
-        choices: ["Add Department", "Add Role", "Add Employee", "View Departments", "View Role", "View Employee", "Delete Department", "Delete Role", "Delete Employee", "Done"]
+        choices: ["Add Department", "Add Role", "Add Employee", "View Departments", "View Role", "View Employee", "Update Employee Role", "Done"]
     })
     .then(function(answer) {
         switch (answer.action) {
@@ -48,14 +49,8 @@ function begin() {
             case "View Employee":
                 viewEmpl();
                 break;
-            case "Delete Department":
+            case "Update Employee Role":
                 delDept();
-                break;
-            case "Delete Role":
-                delRole();
-                break;
-            case "Delete Employee":
-                delEmpl();
                 break;
             case "Done":
                 connection.end();
