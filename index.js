@@ -1,16 +1,18 @@
+const dotenv = require("dotenv")
 const mysql = require("mysql");
 const inquirer = require("inquirer");
 const cTable = require("console.table")
+
 
 //create connection to the database. this will be replaced with the user's info
 var connection = mysql.createConnection({
     host: "localhost",
     //user's port
-    port: 3306,
+    port: process.env.DB_PORT,
     //user's username
-    user: "root",
+    user: process.env.DB_USER,
     //user's password
-    password: "root",
+    password: process.env.DB_PW,
     //db name to connect to
     database: "employeeTracker_DB"
 })
@@ -56,7 +58,7 @@ function begin() {
                     updtRole();
                     break;
                 case "Done":
-                    connection.end();
+                    process.exit();
             }
         })
 }
