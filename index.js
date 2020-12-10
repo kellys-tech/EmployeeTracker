@@ -20,6 +20,7 @@ connection.connect(function(err) {
     //run begin function to start questions if a connection is made
     begin()
 })
+
 //function to ask question
 function begin() {
     //prompt for what the user would like to do
@@ -133,6 +134,47 @@ function addRole() {
 }
 
 function addEmpl() {
+    inquirer.prompt ([
+        {
+            name: "first_name",
+            type: "input",
+            message: "Enter employee's first name.",
+        },
+        {
+            name: "last_name",
+            type: "input",
+            message: "Enter employee's last name.",  
+        },
+        {
+            name: "role_id",
+            type: "input",
+            message: "Enter the role_id of the employee.",  
+        },
+        {
+            name: "manager_id",
+            type: "input",
+            message: "Enter their manager id if applicable or hit Enter to continue without manager id."
+        }
+        ]).then(function(userInput){
+            console.log("Inserting a new employee...\n");
+            var query = connection.query(
+              "INSERT INTO employee SET ?",
+              {
+                first_name: userInput.first_name,
+                last_name: userInput.last_name,
+                role_id: userInput.role_id,
+                manager_id: userInput.manager_id,
+              },
+              function(err, res) {
+                if (err) throw err;
+                console.log(res.affectedRows + " role inserted!\n");
+                // Call begin() after the insert completes
+                begin();
+              }
+            );
+            // logs the actual query being run
+            console.log(query.sql);
+        })
 }
 
 function viewDept() {
