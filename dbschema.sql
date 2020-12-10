@@ -9,11 +9,12 @@ CREATE TABLE departments (
     PRIMARY KEY (id)
 );
 
-CREATE TABLE empl_role (
+CREATE TABLE role (
     id INT NOT NULL AUTO_INCREMENT,
     title VARCHAR(30) NOT NULL,
     salary DECIMAL(10,4) NOT NULL,
     department_id INT NOT NULL,
+    constraint  fk_department foreign key( department_id) references departments(id),
     PRIMARY KEY (id)
 
 );
@@ -23,6 +24,8 @@ CREATE TABLE employee (
     first_name VARCHAR(30) NOT NULL,
     last_name VARCHAR(30) NOT NULL,
     role_id INT NOT NULL,
-    manager_id INT NOT NULL,
+    constraint  fk_role foreign key( role_id) references role(id),
+    manager_id INT,
+    constraint  fk_employee foreign key( manager_id) references employee(id),
     PRIMARY KEY (id)
 )
