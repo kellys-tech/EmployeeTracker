@@ -24,8 +24,8 @@ connection.connect(function(err) {
 function begin() {
     //prompt for what the user would like to do
     inquirer.prompt ({
-        name: "addViewDelete",
-        type: "list",
+        name: "action",
+        type: "rawlist",
         message: "What would you like to do?",
         choices: ["Add Department", "Add Role", "Add Employee", "View Departments", "View Role", "View Employee", "Update Employee Role", "Done"]
     })
@@ -57,35 +57,41 @@ function begin() {
         }
     })
 }
+
+// function getDepartmentId(){
+//     //mysql return res
+//     //var allId=res.map(res.id);
+//     //addDept(allid);
+
+// }
+
 //ADD DEPARTMENT function
+//later validate department id if i have time
 function addDept() {
-    //prompt user to enter department name
-    inquirer.prompt({
+    inquirer.prompt ({
         name: "name",
         type: "input",
-        message: "Enter the department name.",
-        //validate if answer was input
-        validate: function(value) {
-        //if yes, return true
-            if (isNaN(value)=== false) {
-                return true;
-            }
-            //if not return false
-            return false;
-        }
-    })
-    .then(function(answer) {
-        connection.query(
-            "INSERT INTO departments SET?", {
-                name: answer.name
-            },
-            function(err) {
-                if(err) throw err;
-                console.log("Your department was added successfully");
-                begin();
-            }
+        message: "Enter a department name."
+        
+    }).then(function(userInput){
+        console.log("Inserting a new department...\n");
+        var query = connection.query(
+          "INSERT INTO departments SET ?",
+          {
+            name: userInput.name
+          },
+          function(err, res) {
+            if (err) throw err;
+            console.log(res.affectedRows + " product inserted!\n");
+            // Call updateProduct AFTER the INSERT completes
+            begin();
+          }
         );
-    });
+      
+        // logs the actual query being run
+        console.log(query.sql);
+
+    })
 }
 
 function addRole() {
@@ -97,14 +103,34 @@ function addEmpl() {
 }
 
 function viewDept() {
+    console.log("Selecting all departments...\n");
+  connection.query("SELECT * FROM departments", function(err, res) {
+    if (err) throw err;
+    // Log all results of the SELECT statement
+    console.table(res);
+
+  });
 
 }
 
 function viewRole() {
+    console.log("Selecting all roles...\n");
+    connection.query("SELECT * FROM role", function(err, res) {
+      if (err) throw err;
+      // Log all results of the SELECT statement
+      console.table(res);
+    });
 
 }
 
 function viewEmpl() {
+    console.log("Selecting all employees...\n");
+    connection.query("SELECT * FROM employee", function(err, res) {
+      if (err) throw err;
+      // Log all results of the SELECT statement
+      console.table(res);
+      console.log(res)
+    });
 
 }
 
