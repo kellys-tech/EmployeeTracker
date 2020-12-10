@@ -66,7 +66,7 @@ function begin() {
 // }
 
 //ADD DEPARTMENT function
-//later validate department id if i have time
+//later validate department id if I have time
 function addDept() {
     inquirer.prompt ({
         name: "name",
@@ -82,12 +82,11 @@ function addDept() {
           },
           function(err, res) {
             if (err) throw err;
-            console.log(res.affectedRows + " product inserted!\n");
-            // Call updateProduct AFTER the INSERT completes
+            console.log(res.affectedRows + " department inserted!\n");
+            // Call begin() after the insert completes
             begin();
           }
         );
-      
         // logs the actual query being run
         console.log(query.sql);
 
@@ -95,11 +94,45 @@ function addDept() {
 }
 
 function addRole() {
+        inquirer.prompt ([
+        {
+            name: "title",
+            type: "input",
+            message: "Enter a title for the role.",
+        },
+        {
+            name: "salary",
+            type: "input",
+            message: "Enter the salary for this role.",  
+        },
+        {
+            name: "department_id",
+            type: "input",
+            message: "Enter id of the department this role is in.",  
+        },
+        ]).then(function(userInput){
+            console.log("Inserting a new role...\n");
+            var query = connection.query(
+              "INSERT INTO role SET ?",
+              {
+                title: userInput.title,
+                salary: userInput.salary,
+                department_id: userInput.department_id,
 
+              },
+              function(err, res) {
+                if (err) throw err;
+                console.log(res.affectedRows + " role inserted!\n");
+                // Call begin() after the insert completes
+                begin();
+              }
+            );
+            // logs the actual query being run
+            console.log(query.sql);
+        })
 }
 
 function addEmpl() {
-
 }
 
 function viewDept() {
