@@ -32,13 +32,13 @@ function begin() {
     })
     .then(function(answer) {
         switch (answer.action) {
-            case "Add Department":
+            case "Add Department"://Done
                 addDept();
                 break;
-            case "Add Role":
+            case "Add Role"://Done
                 addRole();
                 break;
-            case "Add Employee":
+            case "Add Employee"://Done
                 addEmpl();
                 break;
             case "View Departments":
@@ -167,7 +167,7 @@ function addEmpl() {
               },
               function(err, res) {
                 if (err) throw err;
-                console.log(res.affectedRows + " role inserted!\n");
+                console.log(res.affectedRows + " employee!\n");
                 // Call begin() after the insert completes
                 begin();
               }
@@ -183,9 +183,7 @@ function viewDept() {
     if (err) throw err;
     // Log all results of the SELECT statement
     console.table(res);
-
   });
-
 }
 
 function viewRole() {
@@ -194,6 +192,7 @@ function viewRole() {
       if (err) throw err;
       // Log all results of the SELECT statement
       console.table(res);
+      console.log(res)
     });
 
 }
