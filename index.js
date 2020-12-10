@@ -202,25 +202,26 @@ function viewDept() {
 function viewRole() {
     console.log("Selecting all roles...\n");
     //run sql query to select and display all rows and columns from role table
-    connection.query("SELECT * FROM role", function (err, res) {
+    connection.query("SELECT role.id, role.title, role.salary, role.department_id, departments.name FROM role INNER JOIN departments ON departments.id = role.department_id",
+    function (err, res) {
         //throw error if select is unsuccessful
         if (err) throw err;
         //if successful, return all results of select statement as a table
         console.table(res);
+        begin();
     });
-    begin();
 }
 
 //VIEW EMPLOYEE function
 function viewEmpl() {
     console.log("Selecting all employees...\n");
     //run sql query to select and display all rows and colums from the employee table
-    connection.query("SELECT * FROM employee", function (err, res) {
+    connection.query("SELECT employee.id, employee.first_name, employee.last_name, employee.role_id, role.title, role.salary, role.department_id, departments.name, employee.manager_id FROM ((employee INNER JOIN role ON employee.role_id = role.id) INNER JOIN departments ON departments.id = role.department_id"), function (err, res) {
         //throw error if select is unsuccessful
         if (err) throw err;
         //if successful, return all results of select statement as a table
         console.table(res);
-    });
+    };
 }
 
 //UPDATE ROLE function
