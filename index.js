@@ -194,6 +194,7 @@ function viewRole() {
       console.table(res);
       console.log(res)
     });
+    begin();
 
 }
 
@@ -209,5 +210,37 @@ function viewEmpl() {
 }
 
 function updtRole() {
+    inquirer.prompt ([
+        {
+        name: "employee_id",
+        type: "input",
+        message: "Enter the ID of the employee you want to update."
+        },
+        {
+            name: "role_id",
+            type: "input",
+            message: "Enter the new id of the employee's role"
+        }
+    ])
+    .then (function (userInput) {
+        console.log("Updating employee role")
+        var query = connection.query (
+            "UPDATE employee SET ? WHERE ?",
+            [
+                {
+                    role_id: userInput.role_id
+                },
+                {
+                    id: userInput.id
+                },
+            ],
+            function(err, res) {
+                if (err) throw err;
+                console.log("Your employee role was updated successfully!");
+                // Call begin() after the insert completes
+                begin();
+            }
+        )
+    })
 
 }
