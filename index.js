@@ -1,20 +1,19 @@
-const dotenv = require("dotenv")
-const mysql = require("mysql");
-const inquirer = require("inquirer");
-const cTable = require("console.table")
-
+require('dotenv').config();
+const mysql = require('mysql');
+const inquirer = require('inquirer');
+const cTable = require('console.table');
 
 //create connection to the database. this will be replaced with the user's info
 var connection = mysql.createConnection({
     host: "localhost",
-    //user's port
+    //user's port from .env file
     port: process.env.DB_PORT,
-    //user's username
+    //user's username from .env file
     user: process.env.DB_USER,
-    //user's password
+    //user's password from .env file
     password: process.env.DB_PW,
-    //db name to connect to
-    database: "employeeTracker_DB"
+    //db name to connect to .env file
+    database: process.env.DB_NAME,
 })
 //handle error case by returning an error if the databse is not found
 connection.connect(function (err) {
@@ -45,13 +44,13 @@ function begin() {
                 case "Add Employee":
                     addEmpl();
                     break;
-                case "View Departments":// need to add join
+                case "View Departments":
                     viewDept();
                     break;
-                case "View Role": //need to add join
+                case "View Role": 
                     viewRole();
                     break;
-                case "View Employee"://need to add join
+                case "View Employee":
                     viewEmpl();
                     break;
                 case "Update Employee Role":
