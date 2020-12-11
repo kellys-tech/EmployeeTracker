@@ -80,4 +80,10 @@ If you would like to contribute please contact me directly by submitting an issu
 If you have any questions you can contact me through my github repo, listed at the top of the page or by emailing me at kellysmith.r77@gmail.com
 
 ## Screenshots
-![NoteTakerDemo](https://github.com/kellys-tech/NoteTaker-Express/blob/main/public/assets/Image/NoteTakerDemo.mov)
+![ViewDepartments](/assets/ViewDepartments.png)
+![ViewRole](/assets/ViewRole.png)
+![ViewEmployee](/assets/ViewEmployee.png)
+![AddDepartment](/assets/NewDepartment.png)
+![AddRole](/assets/NewRole.png)
+![AddEmployee](/assets/NewEmployee.png)
+![UpdateEmployeeRole](/assets/UupdateEmployeeRole.png)
