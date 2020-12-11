@@ -233,7 +233,7 @@ function updtRole() {
     //ask user to enter ID of employee to be updated
     inquirer.prompt([
         {
-            name: "employee_id",
+            name: "id",
             type: "input",
             message: "Enter the ID of the employee you want to update."
         },
