@@ -159,7 +159,7 @@ function addEmpl() {
         {
             name: "manager_id",
             type: "input",
-            message: "Enter their manager id if applicable or hit Enter to continue without manager id."
+            message: "Enter their manager id if applicable",
         }
     ]).then(function (userInput) {
         console.log("Inserting a new employee...\n");
@@ -196,6 +196,7 @@ function viewDept() {
         if (err) throw err;
         // if successful, return all results of select satement as a table
         console.table(res);
+        begin();
     });
 }
 
@@ -217,12 +218,14 @@ function viewRole() {
 function viewEmpl() {
     console.log("Selecting all employees...\n");
     //run sql query to select and display all rows and colums from the employee table
-    connection.query("SELECT employee.id, employee.first_name, employee.last_name, employee.role_id, role.title, role.salary, role.department_id, departments.name, employee.manager_id FROM ((employee INNER JOIN role ON employee.role_id = role.id) INNER JOIN departments ON departments.id = role.department_id"), function (err, res) {
+    connection.query('SELECT employee.id, employee.first_name, employee.last_name, role.title, departments.name AS department_name, role.salary, manager.first_name AS manager_first_name, manager.last_name AS manager_last_name FROM employee LEFT JOIN role on employee.role_id = role.id LEFT JOIN departments on department_id = departments.id LEFT JOIN employee manager on manager.id = employee.manager_id', 
+    function (err, res) {
         //throw error if select is unsuccessful
         if (err) throw err;
         //if successful, return all results of select statement as a table
         console.table(res);
-    };
+        begin();
+    });
 }
 
 //UPDATE ROLE function
